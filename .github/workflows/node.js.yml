@@ -29,10 +29,11 @@ jobs:
     - name: Install PM2
       run: npm install -g pm2
 
-    # Restart the backend service
-    - name: Restart PM2 Backend
-      run: pm2 restart backend
-      
+    # Restart or Start PM2 Backend
+    - name: Restart or Start PM2 Backend
+      run: |
+        pm2 describe backend >/dev/null 2>&1 && pm2 restart backend || pm2 start server.js --name backend
+
     # Only run tests if test script exists
     - name: Test
       run: |
