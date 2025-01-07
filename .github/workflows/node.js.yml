@@ -1,5 +1,4 @@
-name: Node.js Backend CI
-
+name: Node.js Backend CI/CD
 on:
   push:
     branches: [ "master" ]
@@ -11,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
     
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -25,7 +25,6 @@ jobs:
     - name: Build
       run: npm run build --if-present
       
-    # Only run tests if test script exists
     - name: Test
       run: |
         if npm run test 2>/dev/null; then
@@ -34,3 +33,37 @@ jobs:
           echo "No tests configured - skipping test step"
           exit 0
         fi
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' # Only deploy on master branch
+    
+    steps:
+    - name: Deploy to server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          # Navigate to project directory
+          cd ~/backend/_work/mobilify-node-app/mobilify-node-app
+          
+          # Pull latest changes
+          git pull origin master
+          
+          # Install dependencies
+          npm install --production
+          
+          # Check if app is running in PM2
+          if pm2 show backend > /dev/null; then
+            # Restart if already exists
+            pm2 restart backend
+          else
+            # Start if doesn't exist
+            pm2 start server.js --name=backend
+          fi
+          
+          # Save PM2 configuration
+          pm2 save
