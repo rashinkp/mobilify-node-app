@@ -4,6 +4,7 @@ import User from "../models/userSchema.js";
 import generateToken from "../utils/generateToken.js";
 import asyncHandler from 'express-async-handler'
 
+
 export const registerAdmin = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   const adminExists = await Admin.findOne({ email });

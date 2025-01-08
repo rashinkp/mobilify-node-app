@@ -6,24 +6,38 @@ import adminRoutes from './routes/adminRouter.js'
 import userRoutes from './routes/userRouter.js'
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import morgan from "morgan";
+
+
 dotenv.config(); 
 
 const app = express();
 
 // Connect to MongoDB
 connectDB()
+
+const allowedOrigins = process.env.CORS_ORIGIN.split(",");
+
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // Allow cookies or authorization headers
+};
 // Middleware
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+app.use(morgan("dev"));
 
 app.use(
   session({
