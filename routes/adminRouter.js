@@ -63,7 +63,7 @@ router.route("/brand/:id").delete(protect("admin"), deleteBrand);
 router
   .route("/category")
   .post(protect("admin"), addCategory)
-  .get(protect("admin"), getAllCategory);
+  .get( getAllCategory);
 
 //specific category manage
 router
