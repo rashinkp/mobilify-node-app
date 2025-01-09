@@ -104,7 +104,7 @@ router.route("/failedOrder").post(protect("user"), addToFailedOrders);
 //review section
 router.route("/review").post(protect("user"), addReview);
 router.get("/getAReview/:id", protect("user"), getAReview);
-router.get("/productReview/:id", protect("user"), productReview);
+router.get("/productReview/:id", productReview);
 
 
 
