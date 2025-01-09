@@ -50,8 +50,8 @@ app.use(
 
 
 
-app.use("/api/v1/admin", adminRoutes);
-app.use('/api/v1/user', userRoutes);
+app.use("/api/admin", adminRoutes);
+app.use('/api/user', userRoutes);
 
 // Handle 404 Errors
 app.use((req, res, next) => {
