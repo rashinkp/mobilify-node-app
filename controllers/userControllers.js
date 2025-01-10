@@ -127,6 +127,10 @@ export const registerUser = asyncHandler(async (req, res) => {
 
 export const userLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+
+  if (!password) {
+    return res.status(400).json({message:'This account have no password set password firts'})
+  }
   const user = await User.findOne({ email });
 
   //checking if user is blocked or not
