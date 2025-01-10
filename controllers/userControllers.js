@@ -88,7 +88,7 @@ export const registerUser = asyncHandler(async (req, res) => {
       if (!referrerWallet) {
         referrerWallet = new Wallet({
           userId: referredUser._id,
-          balance: 0,
+          balance: reward,
           currency: "INR",
         });
 
