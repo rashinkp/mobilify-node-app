@@ -35,7 +35,7 @@ export const addOrder = asyncHandler(async (req, res) => {
         .status(400)
         .json({
           message:
-            "Cash on delivery not available for total more than 1,20,000 rs.",
+            "Cash on delivery is not available for total more than 1.2 Lack rs.",
         });
     }
     // Check stock availability first

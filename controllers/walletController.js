@@ -107,7 +107,7 @@ export const processTransaction = asyncHandler(async (req, res) => {
     console.log(wallet.balance);
 
     if (wallet.balance < amount) {
-      return res.status(400).json({ message: "Insufficient balance." });
+      return res.status(400).json({ message: "Insufficient wallet balance." });
     }
 
     // Step 2: Deduct balance and save user data
