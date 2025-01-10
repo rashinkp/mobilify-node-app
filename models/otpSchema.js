@@ -39,7 +39,7 @@ async function sendVerificationEmail(email, otp) {
           <p style="font-size: 16px; color: #374151; margin-bottom: 20px;">Please use the OTP code below to verify your email address:</p>
           <p style="font-size: 24px; font-weight: bold; color: #4f46e5; background-color: #e0e7ff; padding: 10px 20px; border-radius: 8px; display: inline-block;">${otp}</p>
           <p style="font-size: 14px; color: #6b7280; margin-top: 20px;">
-            This OTP is valid for the next 10 minutes. If you didn’t request this email, please ignore it.
+            This OTP is valid for the next 5 minutes. If you didn’t request this email, please ignore it.
           </p>
         </div>
         <div style="padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
